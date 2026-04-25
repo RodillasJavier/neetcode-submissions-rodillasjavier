@@ -1,0 +1,37 @@
+class Solution:
+    def floodFill(self, image: List[List[int]], sr: int, sc: int, color: int) -> List[List[int]]:
+        '''
+        in:
+            - m x n matrix image
+                - image[i][j] = pixel val of image
+            - sr, sc origin pixel coords
+            - color to change pixels to
+        out:
+            - modified image
+        '''
+        ROWS, COLS = len(image), len(image[0])
+
+        def dfs(row, col):
+            # Verify in bounds
+            if not (0 <= row < ROWS) or not (0 <= col < COLS):
+                return
+
+            # Only change if color is not target
+            if image[row][col] == color or image[row][col] != target_color:
+                return
+
+            image[row][col] = color
+
+            dfs(row + 1, col)
+            dfs(row - 1, col)
+            dfs(row, col + 1)
+            dfs(row, col - 1)
+        
+        target_color = image[sr][sc]
+        if target_color != color:
+            dfs(sr, sc)
+
+        return image
+
+# time complexity: O(n * m)
+# space complexity: O(1)
